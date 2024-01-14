@@ -102,7 +102,7 @@ void printAllBalances(){
 
 void credit_balance(){
     string userId;
-    double amount;
+    int amount;
     cout<<"Enter userId: ";
     cin>>userId;
     cout<<"Enter amount to credit: ";
@@ -120,7 +120,7 @@ void credit_balance(){
 
 void debit_balance(){
     string userId;
-    double amount;
+    int amount;
     cout<<"Enter userId: ";
     cin>>userId;
     cout<<"Enter amount to debit: ";
