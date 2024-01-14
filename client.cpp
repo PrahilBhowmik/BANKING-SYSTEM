@@ -1,7 +1,9 @@
 #include "clientUtils.h"
  
-int main(){
-    if(!connect()){
+int main(int argc, char* argv[]){
+    string ip = argv[1];
+    string port = argv[2];
+    if(!connect(stoi(port),ip)){
         return 0;
     }
     clientType = 'N';

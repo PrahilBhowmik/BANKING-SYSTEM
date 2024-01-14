@@ -3,8 +3,6 @@
 #include <sys/socket.h> 
 using namespace std;
 
-#define PORT 8080 
-
 string clientType;
 int sock = 0, valread, client_fd;  
 struct sockaddr_in serv_addr; 
@@ -19,7 +17,7 @@ vector<string> tokenize(string data)
     stringstream check(data);
      
     string intermediate;
-     
+    
     // Tokenizing w.r.t. space ' '
     while(getline(check, intermediate, ' '))
     {
@@ -28,15 +26,18 @@ vector<string> tokenize(string data)
     return tokens;
 }
 
-bool connect(){ 
+bool connect(int port,string ip){ 
     if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {  
             printf("\n Socket creation error \n");  
             return false;  
     }  
 
     serv_addr.sin_family = AF_INET;  
-    serv_addr.sin_port = htons(PORT);  
-    if (inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr)  
+    serv_addr.sin_port = htons(port);  
+    const int length = ip.length(); 
+    char* ip_ = new char[length + 1];  
+    strcpy(ip_, ip.c_str());
+    if (inet_pton(AF_INET, ip_, &serv_addr.sin_addr)  
             <= 0) {  
             printf(  
                     "\nInvalid address/ Address not supported \n");  
