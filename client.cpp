@@ -11,7 +11,7 @@ pair<bool,string> login(string userId, string password){
 
 void printMiniStatement(string userId){
     // Request to Server
-    cout<<"PRINTING MINI STATEMENT"<<endl;;
+    cout<<"PRINTING MINI STATEMENT"<<endl;
 }
 
 void printBalance(string userId){
@@ -51,11 +51,12 @@ void handleAdmin(){
         cout<<"Please choose an action:\n1.Credit Balance\n2.Debit Balance\n3.Exit\nYour Choice: ";
         int choice;
         cin>>choice;
+        system("clear");
         switch(choice){
             case 1: credit_balance();break;
             case 2: debit_balance();break;
             case 3: return;
-            default: cout<<"INVALID CHOICE!!"<<endl;
+            default: cout<<"INVALID CHOICE!!"<<endl;break;
         }
     }
 }
@@ -65,11 +66,12 @@ void handleCustomer(string userId){
         cout<<"Please choose an action:\n1.See Available Balance\n2.Get mini statement\n3.Exit\nYour Choice: ";
         int choice;
         cin>>choice;
+        system("clear");
         switch(choice){
             case 1: printBalance(userId);break;
             case 2: printMiniStatement(userId);break;
             case 3: return;
-            default: cout<<"INVALID CHOICE!!"<<endl;
+            default: cout<<"INVALID CHOICE!!"<<endl;break;
         }
     }
 }
@@ -80,13 +82,14 @@ void handlePolice(){
         int choice;
         string userId;
         cin>>choice;
+        system("clear");
         switch(choice){
             case 1: printAllBalances();break;
             case 2: cout<<"Enter userId: ";
                     cin>>userId;
                     printMiniStatement(userId);break;
             case 3: return;
-            default: cout<<"INVALID CHOICE!!"<<endl;
+            default: cout<<"INVALID CHOICE!!"<<endl;break;
         }
     }
 }
@@ -102,9 +105,10 @@ int main(){
         cout<<"Enter Password: ";
         cin>>password;
         auto loginInfo = login(userId,password);
+        system("clear");
         loggedIn = loginInfo.first;
         cout<<loginInfo.second<<endl;
-    }
+    } 
     switch (clientType)
     {
         case 'C': handleCustomer(userId);break;
@@ -112,6 +116,7 @@ int main(){
         case 'P': handlePolice();break;
         default: break;
     }
+    system("clear");
     cout<<"LOGGING OUT"<<endl;
     return 0;
 }
