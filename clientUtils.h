@@ -108,7 +108,14 @@ void credit_balance(){
     cout<<"Enter amount to credit: ";
     cin>>amount;
     // Request to Server
-    cout<<"CREDITING AMOUNT"<<endl;
+    string s = clientType+" credit " + userId+" "+to_string(amount);
+    const int length = s.length(); 
+    char* request = new char[length + 1];  
+    strcpy(request, s.c_str());
+    send(sock, request, strlen(request), 0); 
+    valread = read(sock, buffer, 1024);
+    cout<<buffer<<endl<<endl<<endl;
+    memset(buffer,0,sizeof(buffer));
 }
 
 void debit_balance(){
@@ -119,7 +126,14 @@ void debit_balance(){
     cout<<"Enter amount to debit: ";
     cin>>amount;
     // Request to Server
-    cout<<"DEBITING AMOUNT"<<endl;
+    string s = clientType+" debit " + userId+" "+to_string(amount);
+    const int length = s.length(); 
+    char* request = new char[length + 1];  
+    strcpy(request, s.c_str());
+    send(sock, request, strlen(request), 0); 
+    valread = read(sock, buffer, 1024);
+    cout<<buffer<<endl<<endl<<endl;
+    memset(buffer,0,sizeof(buffer));
 }
 
 void handleAdmin(){
