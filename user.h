@@ -50,6 +50,10 @@ public:
         {
             res = res+i[0]+"_____"+i[1]+"_____"+i[2]+"\n";
         }
+        if (res.size() == 0)
+        {
+            return "NO DATA FOUND";
+        }
         return res;
     }
 };

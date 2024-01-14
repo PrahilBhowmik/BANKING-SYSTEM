@@ -4,7 +4,7 @@ int main(){
     if(!connect()){
         return 0;
     }
-    clientType = 'C';
+    clientType = 'N';
     bool loggedIn=false;
     string userId;
     while(!loggedIn){
@@ -18,7 +18,7 @@ int main(){
         loggedIn = loginInfo.first;
         cout<<loginInfo.second<<endl;
     } 
-    switch (clientType)
+    switch (clientType[0])
     {
         case 'C': handleCustomer(userId);break;
         case 'A': handleAdmin();break;

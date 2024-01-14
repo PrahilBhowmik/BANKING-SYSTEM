@@ -5,7 +5,7 @@ using namespace std;
 
 #define PORT 8080 
 
-char clientType;
+string clientType;
 int sock = 0, valread, client_fd;  
 struct sockaddr_in serv_addr; 
 
@@ -59,13 +59,13 @@ pair<bool,string> login(string userId, string password){
     const int length = s.length(); 
     char* request = new char[length + 1];  
     strcpy(request, s.c_str());
-    send(sock, request, strlen(request), 0);  
-    printf("Hello message sent\n");  
+    send(sock, request, strlen(request), 0); 
     valread = read(sock, buffer, 1024);  
     s=buffer;
+    memset(buffer,0,sizeof(buffer));
     vector<string> vec = tokenize(s);
     if(vec[0]=="Success"){
-        clientType = vec[1][0];
+        clientType = vec[1];
         return make_pair(true,"logged in");
     }
     return make_pair(false,vec[1]);
@@ -73,12 +73,26 @@ pair<bool,string> login(string userId, string password){
 
 void printMiniStatement(string userId){
     // Request to Server
-    cout<<"PRINTING MINI STATEMENT"<<endl;
+    string s = clientType+" miniStatement " + userId;
+    const int length = s.length(); 
+    char* request = new char[length + 1];  
+    strcpy(request, s.c_str());
+    send(sock, request, strlen(request), 0);
+    valread = read(sock, buffer, 1024);
+    cout<<"Your mini statement is:\n"<<buffer<<endl<<endl<<endl;
+    memset(buffer,0,sizeof(buffer));
 }
 
 void printBalance(string userId){
     // Request to Server
-    cout<<"PRINTING YOUR BALANCE"<<endl;
+    string s = clientType+" getBalance " + userId;
+    const int length = s.length(); 
+    char* request = new char[length + 1];  
+    strcpy(request, s.c_str());
+    send(sock, request, strlen(request), 0); 
+    valread = read(sock, buffer, 1024);
+    cout<<"Your account balance is:\nRs."<<buffer<<endl<<endl<<endl;
+    memset(buffer,0,sizeof(buffer));
 }
 
 void printAllBalances(){

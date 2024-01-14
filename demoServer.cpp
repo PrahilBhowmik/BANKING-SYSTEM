@@ -105,15 +105,16 @@ int main(int argc, char const* argv[])
         valread = read(new_socket, buffer, 1024);  
         printf("%s\n", buffer);
         string info = buffer;
+        memset(buffer,0,sizeof(buffer));
         vector<string> token = tokenize(info); 
         
         if(token[0]=="login")
         {
-          do_login(token,buffer);
+          do_login(token,info);
         }
         else if(token[0]=="C")
         {
-                User user(token[3]);
+                User user(token[2]);
                 if(token[1]=="getBalance")
                 {
                     get_Balance_data(user);
