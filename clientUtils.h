@@ -97,7 +97,14 @@ void printBalance(string userId){
 
 void printAllBalances(){
     // Request to Server
-    cout<<"PRINTING ALL BALANCES"<<endl;
+    string s = clientType+" balance";
+    const int length = s.length(); 
+    char* request = new char[length + 1];  
+    strcpy(request, s.c_str());
+    send(sock, request, strlen(request), 0); 
+    valread = read(sock, buffer, 1024);
+    cout<<"All Account Balances:\n"<<buffer<<endl<<endl<<endl;
+    memset(buffer,0,sizeof(buffer));
 }
 
 void credit_balance(){
