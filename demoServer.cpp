@@ -7,6 +7,7 @@
 #include "server.h"
 #define PORT 8080  
 #include "user.h"
+#include "admin.h"
 
 int server_fd, new_socket, valread;  
 struct sockaddr_in address;  
@@ -62,6 +63,28 @@ void get_MiniStatement_data(User user)
       strcpy(char_array, res.c_str()); 
       send(new_socket, char_array, strlen(char_array), 0); 
 }
+
+
+void get_Credit(Admin admin,string id,string balance)
+{  
+    int amt = stoi(balance);    
+    string res =  admin.Credit_Balance(id,amt);
+    const int length = res.length(); 
+    char* char_array = new char[length + 1]; 
+    strcpy(char_array, res.c_str()); 
+    send(new_socket, char_array, strlen(char_array), 0); 
+}
+
+void get_Debit(Admin admin,string id,string balance)
+{  
+    int amt = stoi(balance);    
+    string res =  admin.Debit_Balance(id,amt);
+    const int length = res.length(); 
+    char* char_array = new char[length + 1]; 
+    strcpy(char_array, res.c_str()); 
+    send(new_socket, char_array, strlen(char_array), 0); 
+}
+
 
 int main(int argc, char const* argv[])  
 {  
@@ -123,6 +146,18 @@ int main(int argc, char const* argv[])
                 {
                     get_MiniStatement_data(user);
                 }
+        }
+        else if(token[0]=="A")
+        {
+           Admin admin;
+           if(token[1]=="credit")
+           {
+                get_Credit(admin,token[2],token[3]);
+           }
+           else if(token[1]=="debit")
+           {
+                get_Debit(admin,token[2],token[3]);
+           }
         }
     } 
 

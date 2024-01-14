@@ -106,14 +106,8 @@ public:
             of << endl;
         of << std::put_time(&tm, "%d/%m/%Y") << " Debit " << balancer;
         of.close();
+
+        return "SUCCESSFULLY DEBIT\n";
     }
 };
 
-int main()
-{
-    Admin admin;
-    string res = admin.Credit_Balance("106", 1000);
-    // string res_d = admin.Debit_Balance("102", 1000);
-    cout << res;
-    return 0;
-}
