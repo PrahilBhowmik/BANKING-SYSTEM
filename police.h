@@ -30,7 +30,7 @@ public:
         }
     }
 
-    map<string, string> getBalance()
+    string getBalance()
     {
         map<string, string> mp;
         for (int i = 101; i <= 110; i++)
@@ -47,31 +47,36 @@ public:
             }
         }
 
-        return mp;
+        string res = "";
+        for(auto i : mp)
+        {
+           res = res + i.first + " ------> " + i.second + "\n"; 
+        }
+        return res;
     }
 
-    vector<vector<string>> miniStatement(string user_id)
+    string miniStatement(string user_id)
     {
         int id = stoi(user_id);
 
         if (!(id >= 101 && id <= 110))
         {
-            return {{}};
+            return "NO USER EXIST\n";
         }
 
-        return data[user_id];
+        string res = "";
+        
+        for(auto i : data[user_id])
+        {
+            res = res+i[0]+"_____"+i[1]+"_____"+i[2]+"\n";
+        }
+
+        if(res.size()==0)
+        {
+            return "NO DATA FOUND\n";
+        }
+
+        return res;
     }
 };
 
-int main()
-{
-    Police police;
-    map<string, string> data = police.getBalance();
-    vector<vector<string>> miniStatement = police.miniStatement("102");
-    for (auto i : miniStatement)
-    {
-        cout << i[0] << " " << i[1] << " " << i[2] << endl;
-    }
-    // return response
-    return 0;
-}

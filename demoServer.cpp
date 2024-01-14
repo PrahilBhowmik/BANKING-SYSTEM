@@ -8,7 +8,7 @@
 #define PORT 8080  
 #include "user.h"
 #include "admin.h"
-
+#include "police.h"
 int server_fd, new_socket, valread;  
 struct sockaddr_in address;  
 int opt = 1;  
@@ -85,6 +85,23 @@ void get_Debit(Admin admin,string id,string balance)
     send(new_socket, char_array, strlen(char_array), 0); 
 }
 
+void get_balance(Police police)
+{
+    string res = police.getBalance();
+    const int length = res.length(); 
+    char* char_array = new char[length + 1]; 
+    strcpy(char_array, res.c_str()); 
+    send(new_socket, char_array, strlen(char_array), 0); 
+}
+
+void get_ministatement(Police police,string id)
+{
+    string res = police.miniStatement(id);
+    const int length = res.length(); 
+    char* char_array = new char[length + 1]; 
+    strcpy(char_array, res.c_str()); 
+    send(new_socket, char_array, strlen(char_array), 0); 
+}
 
 int main(int argc, char const* argv[])  
 {  
@@ -158,6 +175,20 @@ int main(int argc, char const* argv[])
            {
                 get_Debit(admin,token[2],token[3]);
            }
+        }
+        else if(token[0]=="P")
+        {
+            Police police;
+
+            if(token[1]=="balance")
+            {
+                get_balance(police);
+            }
+            else if(token[1]=="miniStatement")
+            {
+                get_ministatement(police,token[2]);
+            }
+
         }
     } 
 
