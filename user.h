@@ -43,17 +43,13 @@ public:
         string balance = data[size][2];
         return balance;
     }
-    vector<vector<string>> getMiniStatement()
+    string getMiniStatement()
     {
-        return data;
+        string res = "";
+        for(auto i : data)
+        {
+            res = res+i[0]+"_____"+i[1]+"_____"+i[2]+"\n";
+        }
+        return res;
     }
 };
-
-int main()
-{
-    User user("101");
-    string balance = user.getBalance();
-    vector<vector<string>> getMiniStatement = user.getMiniStatement();
-    // return response
-    return 0;
-}

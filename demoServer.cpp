@@ -6,7 +6,7 @@
 #include <unistd.h>  
 #include "server.h"
 #define PORT 8080  
-
+#include "user.h"
 
 int server_fd, new_socket, valread;  
 struct sockaddr_in address;  
@@ -43,6 +43,24 @@ void do_login(vector<string>&token,string buffer)
         strcpy(char_array, res.c_str()); 
         send(new_socket, char_array, strlen(char_array), 0);  
         printf("Request Handled\n"); 
+}
+
+void get_Balance_data(User user)
+{
+        string res = user.getBalance();
+        const int length = res.length(); 
+        char* char_array = new char[length + 1]; 
+        strcpy(char_array, res.c_str()); 
+        send(new_socket, char_array, strlen(char_array), 0); 
+}
+
+void get_MiniStatement_data(User user)
+{
+      string res = user.getMiniStatement();
+      const int length = res.length(); 
+      char* char_array = new char[length + 1]; 
+      strcpy(char_array, res.c_str()); 
+      send(new_socket, char_array, strlen(char_array), 0); 
 }
 
 int main(int argc, char const* argv[])  
@@ -92,6 +110,18 @@ int main(int argc, char const* argv[])
         if(token[0]=="login")
         {
           do_login(token,buffer);
+        }
+        else if(token[0]=="C")
+        {
+                User user(token[3]);
+                if(token[1]=="getBalance")
+                {
+                    get_Balance_data(user);
+                }
+                else if(token[1]=="miniStatement")
+                {
+                    get_MiniStatement_data(user);
+                }
         }
     } 
 
