@@ -143,6 +143,18 @@ void debit_balance(){
     memset(buffer,0,sizeof(buffer));
 }
 
+void exit(){
+    // Request to Server
+    string s = "exit";
+    const int length = s.length(); 
+    char* request = new char[length + 1];  
+    strcpy(request, s.c_str());
+    send(sock, request, strlen(request), 0); 
+    valread = read(sock, buffer, 1024);
+    cout<<buffer<<endl<<endl<<endl;
+    memset(buffer,0,sizeof(buffer));
+}
+
 void handleAdmin(){
     while(true){
         cout<<"Please choose an action:\n1.Credit Balance\n2.Debit Balance\n3.Exit\nYour Choice: ";
@@ -152,7 +164,7 @@ void handleAdmin(){
         switch(choice){
             case 1: credit_balance();break;
             case 2: debit_balance();break;
-            case 3: return;
+            case 3: exit();return;
             default: cout<<"INVALID CHOICE!!"<<endl;break;
         }
     }
@@ -167,7 +179,7 @@ void handleCustomer(string userId){
         switch(choice){
             case 1: printBalance(userId);break;
             case 2: printMiniStatement(userId);break;
-            case 3: return;
+            case 3: exit();return;
             default: cout<<"INVALID CHOICE!!"<<endl;break;
         }
     }
@@ -185,7 +197,7 @@ void handlePolice(){
             case 2: cout<<"Enter userId: ";
                     cin>>userId;
                     printMiniStatement(userId);break;
-            case 3: return;
+            case 3: exit();return;
             default: cout<<"INVALID CHOICE!!"<<endl;break;
         }
     }
