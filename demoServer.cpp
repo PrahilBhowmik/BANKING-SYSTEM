@@ -190,6 +190,9 @@ int main(int argc, char const* argv[])
             }
 
         }
+        else if(token[0]=="exit"){
+                break;
+        }
     } 
 
     // closing the connected socket  

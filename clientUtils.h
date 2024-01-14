@@ -150,8 +150,8 @@ void exit(){
     char* request = new char[length + 1];  
     strcpy(request, s.c_str());
     send(sock, request, strlen(request), 0); 
-    valread = read(sock, buffer, 1024);
-    cout<<buffer<<endl<<endl<<endl;
+    // valread = read(sock, buffer, 1024);
+    // cout<<buffer<<endl<<endl<<endl;
     memset(buffer,0,sizeof(buffer));
 }
 
