@@ -11,6 +11,23 @@ struct sockaddr_in serv_addr;
 
 char buffer[1024] = { 0 }; 
 
+vector<string> tokenize(string data)
+{
+    vector <string> tokens;
+     
+    // stringstream class check1
+    stringstream check(data);
+     
+    string intermediate;
+     
+    // Tokenizing w.r.t. space ' '
+    while(getline(check, intermediate, ' '))
+    {
+        tokens.push_back(intermediate);
+    }
+    return tokens;
+}
+
 bool connect(){ 
     if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {  
             printf("\n Socket creation error \n");  
@@ -46,10 +63,12 @@ pair<bool,string> login(string userId, string password){
     printf("Hello message sent\n");  
     valread = read(sock, buffer, 1024);  
     s=buffer;
-    if(s=="success"){
-        return make_pair(true,"success");
+    vector<string> vec = tokenize(s);
+    if(vec[0]=="Success"){
+        clientType = vec[1][0];
+        return make_pair(true,"logged in");
     }
-    return make_pair(false,"failure");
+    return make_pair(false,vec[1]);
 }
 
 void printMiniStatement(string userId){

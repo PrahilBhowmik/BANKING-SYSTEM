@@ -4,7 +4,26 @@
 #include <string.h>  
 #include <sys/socket.h>  
 #include <unistd.h>  
+#include "server.h"
 #define PORT 8080  
+
+vector<string> tokenize(string data)
+{
+    vector <string> tokens;
+     
+    // stringstream class check1
+    stringstream check(data);
+     
+    string intermediate;
+     
+    // Tokenizing w.r.t. space ' '
+    while(getline(check, intermediate, ' '))
+    {
+        tokens.push_back(intermediate);
+    }
+    return tokens;
+}
+
 int main(int argc, char const* argv[])  
 {  
     int server_fd, new_socket, valread;  
@@ -51,9 +70,19 @@ int main(int argc, char const* argv[])
     }  
     while(true){
         valread = read(new_socket, buffer, 1024);  
-        printf("%s\n", buffer);  
-        send(new_socket, hello, strlen(hello), 0);  
-        printf("Request Handled\n"); 
+        printf("%s\n", buffer);
+        string info = buffer;
+        vector<string> token = tokenize(info); 
+        if(token[0]=="login")
+        {
+           string res = login(token[1],token[2]);
+           cout<<res<<endl; 
+           const int length = res.length(); 
+           char* char_array = new char[length + 1]; 
+           strcpy(char_array, res.c_str()); 
+           send(new_socket, char_array, strlen(char_array), 0);  
+           printf("Request Handled\n"); 
+        }
     } 
 
     // closing the connected socket  
