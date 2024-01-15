@@ -134,6 +134,7 @@ int main(int argc, char const* argv[])
             perror("listen");  
             exit(EXIT_FAILURE);  
     }  
+    
     if ((new_socket  
             = accept(server_fd, (struct sockaddr*)&address,  
                             (socklen_t*)&addrlen))  
