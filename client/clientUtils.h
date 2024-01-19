@@ -32,7 +32,7 @@ bool connect(int port,string ip){
     if (inet_pton(AF_INET, ip_, &serv_addr.sin_addr)  
             <= 0) {  
             printf(  
-                    "\nInvalid address/ddress not supported \n");  
+                    "\nInvalid/Unsupported Address\n");  
             return false;  
     }  
     if ((client_fd  
