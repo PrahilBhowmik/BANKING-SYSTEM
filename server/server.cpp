@@ -107,11 +107,7 @@ int main(int argc, char *argv[])
 {
     char buffer[1025]; // data buffer of 1K
 
-    // set of socket descriptors
     fd_set readfds;
-
-    // a message
-    char *message = "ECHO Daemon v1.0 \r\n";
 
     // initialise all client_socket[] to 0 so not checked
     for (i = 0; i < max_clients; i++)
@@ -201,15 +197,6 @@ int main(int argc, char *argv[])
                 perror("accept");
                 exit(EXIT_FAILURE);
             }
-
-            // //send new connection greeting message
-            // if( send(new_socket, message, strlen(message), 0) != strlen(message) )
-            // {
-            //     perror("send");
-            // }
-
-            // puts("Welcome message sent successfully");
-
             // add new socket to array of sockets
             for (i = 0; i < max_clients; i++)
             {

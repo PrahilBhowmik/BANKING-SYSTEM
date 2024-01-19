@@ -9,18 +9,11 @@ struct sockaddr_in serv_addr;
 
 char buffer[1024] = { 0 }; 
 
-vector<string> tokenize(string data)
-{
-    vector <string> tokens;
-     
-    // stringstream class check1
-    stringstream check(data);
-     
+vector<string> tokenize(string data){
+    vector<string> tokens;
+    stringstream check(data);   
     string intermediate;
-    
-    // Tokenizing w.r.t. space ' '
-    while(getline(check, intermediate, ' '))
-    {
+    while(getline(check, intermediate, ' ')){
         tokens.push_back(intermediate);
     }
     return tokens;
@@ -28,10 +21,9 @@ vector<string> tokenize(string data)
 
 bool connect(int port,string ip){ 
     if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {  
-            printf("\n Socket creation error \n");  
-            return false;  
-    }  
-
+        printf("\n ERROR: Failed Creating Socket \n");  
+        return false;  
+    } 
     serv_addr.sin_family = AF_INET;  
     serv_addr.sin_port = htons(port);  
     const int length = ip.length(); 
@@ -40,10 +32,9 @@ bool connect(int port,string ip){
     if (inet_pton(AF_INET, ip_, &serv_addr.sin_addr)  
             <= 0) {  
             printf(  
-                    "\nInvalid address/ Address not supported \n");  
+                    "\nInvalid address/ddress not supported \n");  
             return false;  
     }  
-
     if ((client_fd  
             = connect(sock, (struct sockaddr*)&serv_addr,  
                             sizeof(serv_addr)))  
@@ -151,8 +142,6 @@ void exit(){
     char* request = new char[length + 1];  
     strcpy(request, s.c_str());
     send(sock, request, strlen(request), 0); 
-    // valread = read(sock, buffer, 1024);
-    // cout<<buffer<<endl<<endl<<endl;
     memset(buffer,0,sizeof(buffer));
 }
 
